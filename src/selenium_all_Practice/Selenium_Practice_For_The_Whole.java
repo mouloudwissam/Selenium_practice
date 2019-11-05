@@ -1,21 +1,38 @@
 package selenium_all_Practice;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class Selenium_Practice_For_The_Whole {
+public class Selenium_Practice_For_The_Whole  {
     WebDriver driver;
 
     @Test
-    public void Open_Browser() throws InterruptedException {
+    public void Open_Browser() throws InterruptedException, IOException {
+        File src1 = new File("C:/JavaPrograming/src/selenium_all_Practice/sources_1..properties");
+        FileInputStream fis1 = new FileInputStream(src1);
+// Create Properties class object to read properties file
+        Properties pro = new Properties();
+// Load file so we can use into our script
+        pro.load(fis1);
         System.setProperty("webdriver.chrome.driver", "C:/Users/Achfri/Desktop/SeleniumDrivers/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        driver.get("http://www.google.com");
+        driver.get(pro.getProperty("Google_Url"));
 //        driver.manage().window().fullscreen();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(33, TimeUnit.SECONDS);
@@ -25,7 +42,7 @@ public class Selenium_Practice_For_The_Whole {
         System.out.println(" get CurrentUrl:" + " " + driver.getCurrentUrl());
         if (driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input")).isEnabled()) {
             System.out.println("the search Box is enabled:");
-            driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input")).sendKeys("Liverpool is greatest Team");
+            driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/div/div[2]/input")).sendKeys(pro.getProperty("name_of_Google"));
             driver.findElement(By.xpath("//div[@class='FPdoLc VlcLAe']//input[@name='btnK']")).click();
         } else {
             System.out.println("The saerch box is not enable:");
@@ -103,6 +120,39 @@ public class Selenium_Practice_For_The_Whole {
         action1.moveToElement(mouse_Hover);
         Thread.sleep(3000);
         action1.moveToElement(mouse_hover1).click().perform();
+        try {
+            // Specify the path of file
+            File src = new File("C:/Users/Achfri/Documents/New Text Document.xlsx");
+            // load file
+            FileInputStream fis = new FileInputStream(src);
+            // Load workbook
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            // Load sheet- Here we are loading first sheetonly
+            XSSFSheet sh1 = wb.getSheetAt(0);
+            // getRow() specify which row we want to read.
+            // and getCell() specify which column to read.
+            // getStringCellValue() specify that we are reading String data.
+            System.out.println(sh1.getRow(0).getCell(0).getStringCellValue());
+            System.out.println(sh1.getRow(0).getCell(1).getStringCellValue());
+            System.out.println(sh1.getRow(1).getCell(0).getStringCellValue());
+            System.out.println(sh1.getRow(1).getCell(1).getStringCellValue());
+            System.out.println(sh1.getRow(2).getCell(0).getStringCellValue());
+            System.out.println(sh1.getRow(2).getCell(1).getStringCellValue());
+            // here createCell will create column
+            // and setCellvalue will set the value
+            sh1.getRow(0).createCell(2).setCellValue("2.41.0");
+            sh1.getRow(1).createCell(2).setCellValue("2.5");
+            sh1.getRow(2).createCell(2).setCellValue("2.39");
+            // here we need to specify where you want to save file
+            FileOutputStream fout = new FileOutputStream(new File("C:/Users/Achfri/Documents/New Text Document.xlsx"));
+            // finally write content
+            wb.write(fout);
+            // close the file
+            fout.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         driver.navigate().back();
 
 
@@ -125,14 +175,43 @@ public class Selenium_Practice_For_The_Whole {
         driver.navigate().to("http://www.ebay.com");
         List<WebElement> list = driver.findElements(By.tagName("a"));
         list.size();
-
         System.out.println("the size of elements:" + " " + list.size());
         for (int i = 0; i >= list.size(); i++) {
-            System.out.println("print all the elements" + " " +i );
+            System.out.println("print all the elements" + " " + i);
+
+            File src = new File("C:/Users/Achfri/Downloads/Sample Excel.xlsx");
+            try {
+                // Workbook is a class in Jexcel which will take file as an argument and getWork
+                // book is a predefined method which will read the workbook and will return the w
+                // Workbook object
+                Workbook wb = Workbook.getWorkbook(src);
+                // Workbook is loaded now we have to load sheet so using workbook object (wb) we
+                // can call getSheet method which will take index as an argument and will load
+                // the sheet, we can also specify the sheetname also
+                Sheet sh1 = wb.getSheet(0);
+                // Sheet is loaded then we have to read cell so using sh1 object call getCell me
+                // method which we take two arguments getCell(column,row)
+                Cell c1 = sh1.getCell(0, 0);
+                //Cell is loaded then using getContents method we have to extract the data using
+                // getContents() methods
+                // this method will always return you String.
+                // now you are done
+                String data1 = c1.getContents();
+                System.out.println(data1);
+                System.out.println("Sheet data is " + data1);
+            } catch (BiffException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
 
+        driver.quit();
     }
 }
+
+
+
 
 
