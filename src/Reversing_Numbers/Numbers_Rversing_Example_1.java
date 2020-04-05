@@ -17,9 +17,6 @@ public class Numbers_Rversing_Example_1 {
         }
         System.out.println("NUMB:" + rve);
 
-    }
-
-    public static void main(System[] args) {
         //by using algoritm
         Scanner sc = new Scanner(System.in);
         System.out.println("enter:");
@@ -28,9 +25,27 @@ public class Numbers_Rversing_Example_1 {
         while (name_nmber != 0) {
             n = n * 10 + name_nmber % 10;
             name_nmber = name_nmber / 10;
-            System.out.println("reverse enter:");
+
         }
+        System.out.println("reverse enter:");
+
+//            By using Algoritrm.
+        Scanner sc1 = new Scanner(System.in);
+        System.out.println("The best enter name is :");
+        int number_name = sc1.nextInt();
+        int b = 12;
+        while (number_name != 0) {
+            b = b * 10 + number_name % 10;
+            number_name = number_name / 10;
+
+        }
+        System.out.println("the Result:");
     }
 
-
 }
+
+
+
+
+
+

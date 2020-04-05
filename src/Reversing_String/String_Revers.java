@@ -9,18 +9,12 @@ public class String_Revers {
         int len = a.length;
         for (int i = len - 1; i >= 0; i--) {
             rev = rev + a[i];
-            System.out.println("the reverse value:" + rev);
+            //System.out.println("the reverse value:" + rev);
         }
-// By using StringBuffer class
-        StringBuffer string = new StringBuffer(str);
+        System.out.println("the reverse value:" + rev);
+        // By using StringBuffer class
 
-        System.out.println(string.reverse());
-        // By using Character Array
-        char[] b = str.toCharArray();
-        for (int c = 0; c < b.length; c++) {
 
-            System.out.println(b[c]);
-        }
 
     }
 

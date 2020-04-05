@@ -1,4 +1,4 @@
-package java_programing;
+package Swapping_Practice;
 
 public class Swapping {
     // the first logic we can use third variable

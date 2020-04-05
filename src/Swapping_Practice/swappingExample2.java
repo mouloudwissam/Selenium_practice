@@ -1,4 +1,4 @@
-package java_programing;
+package Swapping_Practice;
 
 public class swappingExample2 {
     public static void main(String[] args) {
